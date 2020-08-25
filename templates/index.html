@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Backgammon</title>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+  </head>
+  <body>
+    <header class="container">
+      <h1>Backgammon</h1>
+      <p>Unser Backgammon Projekt der SoAk 2020</p>
+    </header>
+
+    <main class="container">
+      <form action="/game" method="post">
+        <input type="submit" name="submit" id="submit" value="New Game" />
+      </form>
+
+      <form action="/game" method="get">
+        <input type="text" placeholder="Game Token" name="token" id="token"/>
+        <button type="submit">Join existing</button>
+      </form>
+
+    </main>
+  </body>
+</html>
