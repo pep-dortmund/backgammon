@@ -17,7 +17,7 @@ def RollTwoDice(): # Würfeln mit zwei Würfeln
     w = w1 + w2
     return [w, w1==w2] # Würfelergebnis und Bool ob Pasch
 
-def RollTwoDiceWhichBigger():
+def RollTwoDiceWhichGreater():
     w1 = RollOneDice()
     w2 = RollOneDice()
     w = w1 + w2
