@@ -5,14 +5,17 @@ let COLORS = {
   bg: "#007820",
   border: "#943f03",
   pits: ["black", "crimson"],
+  pieces: ["darkcyan", "gold"]
 }
 
 let SIZES = {
   border: 10,
   bar: 50,
   pit: 250,
+  piece: 45,
 }
 
+let PITSPOS = new Array(24)
 
 function init_state() {
   let game_state = {
@@ -27,8 +30,33 @@ function init_state() {
     game_state.board[player][12] = 5;
     game_state.board[player][23] = 2;
   }
+  return game_state
 }
 
+let GAME_STATE = init_state();
+
+function drawPiece(ctx, color, x, y) {
+  let canvas = ctx.canvas;
+  ctx.fillStye = color;
+  ctx.beginPath();
+  ctx.arc(x,y, SIZES.piece, 0, 2*Math.PI);
+  ctx.fill();
+}
+function drawPices(ctx, board) {
+  let canvas =ctx.canvas;
+  for (let player = 0; player <= 1; player++){
+    for (let pit = 0; pit <= 23; pit++){
+      for (let count = 0; count < board[player][pit]; count++){
+	if (pit <= 11){
+	  drawPiece(ctx, COLORS.pieces[player], PITSPOS[pit], canvas.height - SIZES.border - SIZES.piece/2 - count*SIZES.piece);
+	}
+	else {
+	  drawPiece(ctx, COLORS.pieces[player], PITSPOS[pit], SIZES.border + SIZES.piece/2 + count*SIZES.piece);
+	}
+      }
+    }  
+  }
+}
 
 function draw(ctx) {
   let canvas = ctx.canvas;
@@ -88,6 +116,16 @@ function drawPits(ctx, offset) {
 window.onload = () => {
   let canvas = document.getElementById("game");
   let ctx = canvas.getContext("2d");
-  
+  // width of pits
+  let width = (canvas.width / 2 - SIZES.border - SIZES.bar / 2) / 6;
+  for (let i=0; i <6; i++){
+    PITSPOS[i] = [(canvas.width - SIZES.border - width/2) - i* width];
+    PITSPOS[i+12] = [(canvas.width - SIZES.border - width/2) - i* width];
+  }
+  for (let i=0; i <6; i++){
+    PITSPOS[i+6] = [(canvas.width - SIZES.bar -SIZES.border - width/2) - i* width];
+    PITSPOS[i+18] = [(canvas.width - SIZES.bar -SIZES.border - width/2) - i* width];
+  }
   draw(ctx);
+  drawPices(ctx, GAME_STATE)
 }
