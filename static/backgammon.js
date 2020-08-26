@@ -5,7 +5,7 @@ let COLORS = {
   bg: "#007820",
   border: "#943f03",
   pits: ["black", "crimson"],
-  pieces: ["darkcyan", "gold"]
+  pieces: ["#6a5acd", "#ffd700"],
 }
 
 let SIZES = {
@@ -37,24 +37,34 @@ let GAME_STATE = init_state();
 
 function drawPiece(ctx, color, x, y) {
   let canvas = ctx.canvas;
-  ctx.fillStye = color;
   ctx.beginPath();
-  ctx.arc(x,y, SIZES.piece, 0, 2*Math.PI);
+  ctx.arc(x,y, SIZES.piece/2, 0, 2*Math.PI);
+  ctx.fillStye = color;
   ctx.fill();
+  ctx.closePath();
+	console.log(color)
 }
 function drawPices(ctx, board) {
   let canvas =ctx.canvas;
-  for (let player = 0; player <= 1; player++){
-    for (let pit = 0; pit <= 23; pit++){
-      for (let count = 0; count < board[player][pit]; count++){
-	if (pit <= 11){
-	  drawPiece(ctx, COLORS.pieces[player], PITSPOS[pit], canvas.height - SIZES.border - SIZES.piece/2 - count*SIZES.piece);
-	}
-	else {
-	  drawPiece(ctx, COLORS.pieces[player], PITSPOS[pit], SIZES.border + SIZES.piece/2 + count*SIZES.piece);
-	}
+  for (let pit = 0; pit <= 23; pit++){ // first player
+    for (let count = 0; count < board[0][pit]; count++){
+      if (pit <= 11){
+        drawPiece(ctx, COLORS.pieces[0], PITSPOS[pit], canvas.height - SIZES.border - SIZES.piece/2 - count*SIZES.piece);
       }
-    }  
+      else {
+        drawPiece(ctx, COLORS.pieces[0], PITSPOS[pit], SIZES.border + SIZES.piece/2 + count*SIZES.piece);
+      }
+    }
+  }  
+  for (let pit = 0; pit <= 23; pit++){ // second player, reversed board order
+    for (let count = 0; count < board[1][pit]; count++){
+      if (pit > 11){
+        drawPiece(ctx, COLORS.pieces[1], PITSPOS[23-pit], canvas.height - SIZES.border - SIZES.piece/2 - count*SIZES.piece);
+      }
+      else {
+        drawPiece(ctx, COLORS.pieces[1], PITSPOS[23-pit], SIZES.border + SIZES.piece/2 + count*SIZES.piece);
+      }
+    }
   }
 }
 
@@ -119,13 +129,13 @@ window.onload = () => {
   // width of pits
   let width = (canvas.width / 2 - SIZES.border - SIZES.bar / 2) / 6;
   for (let i=0; i <6; i++){
-    PITSPOS[i] = [(canvas.width - SIZES.border - width/2) - i* width];
-    PITSPOS[i+12] = [(canvas.width - SIZES.border - width/2) - i* width];
+    PITSPOS[i] = (canvas.width - SIZES.border - width/2) - i* width;
+    PITSPOS[i+12] = (canvas.width - SIZES.border - width/2) - i* width;
   }
   for (let i=0; i <6; i++){
-    PITSPOS[i+6] = [(canvas.width - SIZES.bar -SIZES.border - width/2) - i* width];
-    PITSPOS[i+18] = [(canvas.width - SIZES.bar -SIZES.border - width/2) - i* width];
+    PITSPOS[i+6] = (canvas.width/2 - SIZES.bar/2  - width/2) - i* width;
+    PITSPOS[i+18] = (canvas.width/2 - SIZES.bar/2  - width/2) - i* width;
   }
   draw(ctx);
-  drawPices(ctx, GAME_STATE)
+  drawPices(ctx, GAME_STATE.board)
 }
