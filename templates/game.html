@@ -13,6 +13,13 @@
     <div id="container">
       <canvas id="game" width="800" height="600">
     </div>
+    <div id="dice">
+      <canvas id="diceA" width="50" height="50"></canvas>
+      <canvas id="diceB" width="50" height="50"></canvas>
+      <form action="/game" method="post">
+        <input type="submit" name="submit" id="submit" value="roll dice" />
+      </form>
+    </div>
   </body>
   <script src="static/backgammon.js" charset="utf-8"></script>
 </html>

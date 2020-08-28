@@ -84,10 +84,53 @@ function drawPits(ctx, offset) {
   }
 }
 
+function drawpip(ctx, width, pipsrad, x, y){
+  ctx.beginPath()
+  ctx.arc(
+    x*width, y*width, pipsrad, 0, 2 * Math.PI,
+  )
+  ctx.fillStyle = "black"
+  ctx.fill()
+}
+
+function drawDice(ctx, pips){
+  let canvas = ctx.canvas;
+  width = canvas.width;
+  pipsrad = width/10;
+  switch(pips) {
+    case 1: 
+      drawpip(ctx, width, pipsrad*1.2, 0.5, 0.5)
+      break;
+    case 3:
+      drawpip(ctx, width, pipsrad, 0.5, 0.5)
+    case 2: 
+      drawpip(ctx, width, pipsrad, 0.25, 0.25)
+      drawpip(ctx, width, pipsrad, 0.75, 0.75)
+      break;
+    case 5:
+      drawpip(ctx, width, pipsrad, 0.5, 0.5)
+    case 4:
+      drawpip(ctx, width, pipsrad, 0.25, 0.25)
+      drawpip(ctx, width, pipsrad, 0.75, 0.75)
+      drawpip(ctx, width, pipsrad, 0.75, 0.25)
+      drawpip(ctx, width, pipsrad, 0.25, 0.75)
+      break; 
+    case 6:
+      drawpip(ctx, width, pipsrad*0.85, 2/7, 2/5)
+      drawpip(ctx, width, pipsrad*0.85, 2/7, 3/5)
+      drawpip(ctx, width, pipsrad*0.85, 2/7, 4/5)
+      drawpip(ctx, width, pipsrad*0.85, 5/7, 2/5)
+      drawpip(ctx, width, pipsrad*0.85, 5/7, 3/5)
+      drawpip(ctx, width, pipsrad*0.85, 5/7, 4/5)
+      break;
+    default:
+  }
+}
 
 window.onload = () => {
   let canvas = document.getElementById("game");
   let ctx = canvas.getContext("2d");
   
   draw(ctx);
+
 }
