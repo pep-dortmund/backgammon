@@ -31,13 +31,13 @@ body {
 }
 
 #diceA {
-  width: 10%;
-  height: 10%;
+  width: 20%;
+  height: 20%;
   object-fit: contain;
 }
 
 #diceB {
-  width: 10%;
-  height: 10%;
+  width: 20%;
+  height: 20%;
   object-fit: contain;
 }

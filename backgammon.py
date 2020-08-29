@@ -10,3 +10,8 @@ def index():
 @app.route("/game", methods=["GET", "POST"])
 def game():
     return render_template("game.html")
+
+@app.route("/game", methods=["roll"])
+def roll():
+    w = RollTwoDice()
+    return render_template("game.html", dic=w)

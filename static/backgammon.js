@@ -1,6 +1,5 @@
 "use strict;"
 
-
 let COLORS = {
   bg: "#007820",
   border: "#943f03",
@@ -95,6 +94,8 @@ function drawpip(ctx, width, pipsrad, x, y){
 
 function drawDice(ctx, pips){
   let canvas = ctx.canvas;
+  ctx.fillStyle = "#f0ebd8";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   width = canvas.width;
   pipsrad = width/10;
   switch(pips) {
@@ -127,10 +128,35 @@ function drawDice(ctx, pips){
   }
 }
 
-window.onload = () => {
+let sock
+
+
+const addRolldiceListeners = () => {
+  const button = document.getElementById("RollDice");
+  button.addEventListener('click', () => {
+    sock.emit('roll')
+  })
+}
+
+window.onload = (dic) => {
   let canvas = document.getElementById("game");
   let ctx = canvas.getContext("2d");
   
   draw(ctx);
+
+  if (dic){
+    d = dic
+  }else{
+    d = [3, 0]
+  }
+
+
+  let canvasd1 = document.getElementById("diceA");
+  let ctxd1 = canvasd1.getContext("2d");
+  let canvasd2 = document.getElementById("diceB");
+  let ctxd2 = canvasd2.getContext("2d");
+
+  drawDice(ctxd1, d[0]);
+  drawDice(ctxd2, d[1]);
 
 }
